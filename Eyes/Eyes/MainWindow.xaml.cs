@@ -27,6 +27,7 @@ namespace Eyes
             InitializeComponent();
             this.Counter.DataContext = this;
             this.Timer.Interval = TimeSpan.FromSeconds(1);
+            this.Topmost = true;
             this.Timer.Tick += (sender, e) =>
             {
                 this.Time = this.Time.Add(TimeSpan.FromSeconds(-1));
