@@ -27,6 +27,7 @@ namespace Eyes
             InitializeComponent();
             this.Counter.DataContext = this;
             this.Timer.Interval = TimeSpan.FromSeconds(1);
+            this.Time = TimeSpan.FromMinutes(this.IsTimeToExerciseEye() ? 2 : 1);
             this.Topmost = true;
             this.Timer.Tick += (sender, e) =>
             {
@@ -38,12 +39,12 @@ namespace Eyes
                 }
             };
             this.Timer.Start();
-            this.Synth.SpeakAsync("护眼开始啦！");
+            this.Synth.SpeakAsync(this.IsTimeToExerciseEye() ? "眼保健操开始啦！" : "护眼开始啦！");
         }
 
         public DispatcherTimer Timer { get; set; } = new DispatcherTimer();
 
-        public TimeSpan Time { get; set; } = TimeSpan.FromMinutes(1);
+        public TimeSpan Time { get; set; }
 
         public bool IsTimeOver { get; set; }
 
@@ -61,11 +62,16 @@ namespace Eyes
 
         private void WhenTimeIsOver()
         {
-            this.Synth.Speak("护眼结束啦！");
+            this.Synth.Speak(this.IsTimeToExerciseEye() ? "眼保健操结束啦！" : "护眼结束啦！");
             this.IsTimeOver = true;
             this.Close();
         }
 
+        private bool IsTimeToExerciseEye()
+        {
+            var now = DateTime.Now;
+            return (now.Hour >= 12 && now.Minute < 30) || (now.Hour >= 15 && now.Minute <= 30);
+        }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
