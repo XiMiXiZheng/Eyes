@@ -70,7 +70,7 @@ namespace Eyes
         private bool IsTimeToExerciseEye()
         {
             var now = DateTime.Now;
-            return (now.Hour >= 12 && now.Minute < 30) || (now.Hour >= 15 && now.Minute < 30);
+            return (now.Hour >= 12 && now.Hour < 13 && now.Minute < 30) || (now.Hour >= 15 && now.Hour < 16 && now.Minute < 30);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
